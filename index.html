@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MHEL Servicio Técnico</title>
+  <meta name="theme-color" content="#111827" />
+  <meta name="description" content="App técnica MHEL para servicio, revisión y carga de informes." />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icon-192.png" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+      color: #111827;
+    }
+    header {
+      background: linear-gradient(90deg, #111827, #1f2937);
+      color: white;
+      padding: 18px 16px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 10px rgba(0,0,0,.15);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .brand img {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: white;
+      object-fit: cover;
+      padding: 4px;
+    }
+    .brand h1 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.1;
+    }
+    .brand p {
+      margin: 3px 0 0;
+      font-size: 13px;
+      opacity: .9;
+    }
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 18px rgba(0,0,0,.08);
+    }
+    .card h2 {
+      margin: 0 0 12px;
+      font-size: 18px;
+    }
+    label {
+      display: block;
+      margin: 10px 0 6px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    input, textarea, select {
+      width: 100%;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 15px;
+      background: #fff;
+    }
+    textarea { min-height: 92px; resize: vertical; }
+    .grid {
+      display: grid;
+      gap: 12px;
+    }
+    @media (min-width: 700px) {
+      .grid-2 { grid-template-columns: 1fr 1fr; }
+      .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+    }
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    button {
+      border: none;
+      border-radius: 14px;
+      padding: 13px 14px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .primary { background: #2563eb; color: white; }
+    .secondary { background: #e5e7eb; color: #111827; }
+    .success { background: #059669; color: white; width: 100%; margin-top: 10px; }
+    .mini {
+      font-size: 13px;
+      color: #4b5563;
+      margin-top: 8px;
+    }
+    .saved-box {
+      white-space: pre-wrap;
+      background: #f9fafb;
+      border: 1px dashed #d1d5db;
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    footer {
+      text-align: center;
+      color: #6b7280;
+      font-size: 12px;
+      padding: 20px 16px 28px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <img src="icon-192.png" alt="Logo MHEL" />
+      <div>
+        <h1>MHEL</h1>
+        <p>Calefacción · Energía Solar · Aire Acondicionado</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Datos del cliente</h2>
+      <div class="grid grid-2">
+        <div>
+          <label>Nombre</label>
+          <input id="cliente" type="text" placeholder="Nombre del cliente" />
+        </div>
+        <div>
+          <label>Teléfono</label>
+          <input id="telefono" type="text" placeholder="223..." />
+        </div>
+        <div>
+          <label>Dirección</label>
+          <input id="direccion" type="text" placeholder="Dirección" />
+        </div>
+        <div>
+          <label>Fecha</label>
+          <input id="fecha" type="date" />
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Equipo</h2>
+      <div class="grid grid-3">
+        <div>
+          <label>Tipo</label>
+          <select id="tipo">
+            <option>Bomba de calor</option>
+            <option>Aire acondicionado</option>
+            <option>Caldera</option>
+            <option>Termotanque</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div>
+          <label>Marca</label>
+          <input id="marca" type="text" placeholder="LG, Daikin, etc." />
+        </div>
+        <div>
+          <label>Modelo</label>
+          <input id="modelo" type="text" placeholder="Modelo" />
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Revisión técnica</h2>
+      <label>Parámetros verificados</label>
+      <textarea id="parametros" placeholder="Presión, temperatura, tensión, consumo, códigos de error..."></textarea>
+
+      <label>Trabajo realizado</label>
+      <textarea id="trabajo" placeholder="Limpieza, control, reparación, pruebas, carga de gas, etc."></textarea>
+
+      <label>Observaciones</label>
+      <textarea id="observaciones" placeholder="Detalle final para el cliente"></textarea>
+
+      <button class="success" onclick="guardar()">Guardar informe</button>
+      <div class="mini">Se guarda en el navegador del celular para que puedas volver a verlo.</div>
+
+      <div class="actions">
+        <button class="primary" onclick="copiarWhatsApp()">Copiar texto para WhatsApp</button>
+        <button class="secondary" onclick="limpiarFormulario()">Limpiar</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Último informe guardado</h2>
+      <div id="ultimoGuardado" class="saved-box">Todavía no hay informe guardado.</div>
+    </section>
+  </main>
+
+  <footer>
+    MHEL Servicio Técnico
+  </footer>
+
+  <script>
+    const ids = ["cliente","telefono","direccion","fecha","tipo","marca","modelo","parametros","trabajo","observaciones"];
+
+    function obtenerDatos() {
+      const datos = {};
+      ids.forEach(id => datos[id] = document.getElementById(id).value || "");
+      return datos;
+    }
+
+    function armarTexto(datos) {
+      return `MHEL - INFORME TÉCNICO
+
+Cliente: ${datos.cliente}
+Teléfono: ${datos.telefono}
+Dirección: ${datos.direccion}
+Fecha: ${datos.fecha}
+
+Equipo: ${datos.tipo}
+Marca: ${datos.marca}
+Modelo: ${datos.modelo}
+
+Parámetros verificados:
+${datos.parametros}
+
+Trabajo realizado:
+${datos.trabajo}
+
+Observaciones:
+${datos.observaciones}`;
+    }
+
+    function mostrarUltimo() {
+      const guardado = localStorage.getItem("mhel_informe");
+      document.getElementById("ultimoGuardado").textContent = guardado || "Todavía no hay informe guardado.";
+    }
+
+    function guardar() {
+      const datos = obtenerDatos();
+      const texto = armarTexto(datos);
+      localStorage.setItem("mhel_informe", texto);
+      mostrarUltimo();
+      alert("Informe guardado correctamente");
+    }
+
+    async function copiarWhatsApp() {
+      const texto = armarTexto(obtenerDatos());
+      try {
+        await navigator.clipboard.writeText(texto);
+        alert("Texto copiado. Ahora lo podés pegar en WhatsApp.");
+      } catch (e) {
+        alert("No se pudo copiar automáticamente. Guardá el informe y copiá manualmente el texto desde la parte inferior.");
+      }
+    }
+
+    function limpiarFormulario() {
+      ids.forEach(id => document.getElementById(id).value = "");
+    }
+
+    document.getElementById("fecha").value = new Date().toISOString().split("T")[0];
+    mostrarUltimo();
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js").catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
