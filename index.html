@@ -285,123 +285,22 @@ ${datos.observaciones}`;
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <script>
-  const ids = ["cliente","telefono","direccion","fecha","tipo","marca","modelo","parametros","trabajo","observaciones"];
+function generarPDF() {
+  const { jsPDF } = window.jspdf;
 
-  function obtenerDatos() {
-    const datos = {};
-    ids.forEach(id => {
-      const el = document.getElementById(id);
-      datos[id] = el ? el.value : "";
-    });
-    return datos;
-  }
+  html2canvas(document.body).then(canvas => {
+    const imgData = canvas.toDataURL("image/png");
 
-  function armarTexto(datos) {
-    return `MHEL - INFORME TÉCNICO
+    const pdf = new jsPDF("p", "mm", "a4");
 
-Cliente: ${datos.cliente}
-Teléfono: ${datos.telefono}
-Dirección: ${datos.direccion}
-Fecha: ${datos.fecha}
+    const ancho = 190;
+    const alto = (canvas.height * ancho) / canvas.width;
 
-Equipo: ${datos.tipo}
-Marca: ${datos.marca}
-Modelo: ${datos.modelo}
-
-Parámetros verificados:
-${datos.parametros}
-
-Trabajo realizado:
-${datos.trabajo}
-
-Observaciones:
-${datos.observaciones}`;
-  }
-
-  function mostrarUltimo() {
-    const guardado = localStorage.getItem("mhel_informe");
-    const caja = document.getElementById("ultimoGuardado");
-    if (caja) {
-      caja.textContent = guardado || "Todavía no hay informe guardado.";
-    }
-  }
-
-  function guardar() {
-    const datos = obtenerDatos();
-    const texto = armarTexto(datos);
-    localStorage.setItem("mhel_informe", texto);
-    mostrarUltimo();
-    alert("Informe guardado correctamente");
-  }
-
-  async function copiarWhatsApp() {
-    const texto = armarTexto(obtenerDatos());
-    try {
-      await navigator.clipboard.writeText(texto);
-      alert("Texto copiado. Ahora lo podés pegar en WhatsApp.");
-    } catch (e) {
-      alert("No se pudo copiar automáticamente. Guardá el informe y copiá manualmente el texto desde la parte inferior.");
-    }
-  }
-
-  function limpiarFormulario() {
-    ids.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.value = "";
-    });
-  }
-
-  async function generarPDF() {
-    try {
-      const { jsPDF } = window.jspdf;
-      const elemento = document.body;
-
-      const canvas = await html2canvas(elemento, {
-        scale: 2,
-        useCORS: true,
-        backgroundColor: "#ffffff"
-      });
-
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("p", "mm", "a4");
-
-      const pageWidth = 190;
-      const pageHeight = 277;
-      const imgWidth = pageWidth;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-      let heightLeft = imgHeight;
-      let position = 10;
-
-      pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-
-      while (heightLeft > 0) {
-        position = heightLeft - imgHeight + 10;
-        pdf.addPage();
-        pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
-
-      pdf.save("Informe_MHEL.pdf");
-    } catch (error) {
-      console.error(error);
-      alert("No se pudo generar el PDF.");
-    }
-  }
-
-  const fecha = document.getElementById("fecha");
-  if (fecha) {
-    fecha.value = new Date().toISOString().split("T")[0];
-  }
-
-  mostrarUltimo();
-
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js").catch(() => {});
-    });
-  }
+    pdf.addImage(imgData, "PNG", 10, 10, ancho, alto);
+    pdf.save("Informe_MHEL.pdf");
+  });
+}
 </script>
+
 </body>
 </html>
