@@ -166,8 +166,10 @@
     }
 
     .pdf-area {
-      background: white;
-      color: #111827;
+  background: white;
+  color: #111827;
+  font-size: 16px;
+}
     }
 
     .pdf-header {
@@ -186,9 +188,9 @@
     }
 
     .pdf-header h3 {
-      margin: 0;
-      font-size: 18px;
-    }
+  margin: 0;
+  font-size: 22px;
+}
 
     .pdf-header p {
       margin: 4px 0 0;
@@ -450,11 +452,11 @@ ${datos.observaciones}`;
         const imgData = canvas.toDataURL("image/png");
         const pdf = new jsPDF("p", "mm", "a4");
 
-        const pageWidth = 190;
+        const pageWidth = 200;
         const imgWidth = pageWidth;
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-        pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
+       pdf.addImage(imgData, "PNG", 5, 5, imgWidth, imgHeight);
         pdf.save("Informe_MHEL.pdf");
       } catch (error) {
         console.error(error);
