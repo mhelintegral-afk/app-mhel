@@ -281,6 +281,30 @@ ${datos.observaciones}`;
         navigator.serviceWorker.register("./sw.js").catch(() => {});
       });
     }
-  </script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+async function generarPDF() {
+  const { jsPDF } = window.jspdf;
+
+  const elemento = document.body;
+
+  const canvas = await html2canvas(elemento, {
+    scale: 2
+  });
+
+  const imgData = canvas.toDataURL("image/png");
+
+  const pdf = new jsPDF("p", "mm", "a4");
+
+  const ancho = 190;
+  const alto = (canvas.height * ancho) / canvas.width;
+
+  pdf.addImage(imgData, "PNG", 10, 10, ancho, alto);
+
+  pdf.save("Informe_MHEL.pdf");
+}
+</script>
 </body>
 </html>
