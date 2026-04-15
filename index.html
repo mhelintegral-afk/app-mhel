@@ -683,7 +683,16 @@ Total general: ${datos.total_general}`;
         alert("No se pudo generar el PDF.");
       }
     }
+function enviarWhatsApp() {
+  const datos = obtenerDatos();
+  const texto = armarTexto(datos);
 
+  const telefono = datos.telefono.replace(/\D/g, "");
+
+  const url = `https://wa.me/${telefono}?text=${encodeURIComponent(texto)}`;
+
+  window.open(url, "_blank");
+}
     ["cant1","precio1","cant2","precio2","cant3","precio3"].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.addEventListener("input", actualizarTotales);
