@@ -100,6 +100,7 @@
     @media (min-width: 700px) {
       .grid-2 { grid-template-columns: 1fr 1fr; }
       .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+      .grid-4 { grid-template-columns: 2fr 1fr 1fr 1fr; }
     }
 
     .actions {
@@ -166,10 +167,9 @@
     }
 
     .pdf-area {
-  background: white;
-  color: #111827;
-  font-size: 16px;
-}
+      background: white;
+      color: #111827;
+      font-size: 16px;
     }
 
     .pdf-header {
@@ -180,7 +180,7 @@
     }
 
     .pdf-header img {
-      max-height: 70px;
+      max-height: 75px;
       width: auto;
       object-fit: contain;
       display: block;
@@ -188,9 +188,9 @@
     }
 
     .pdf-header h3 {
-  margin: 0;
-  font-size: 22px;
-}
+      margin: 0;
+      font-size: 22px;
+    }
 
     .pdf-header p {
       margin: 4px 0 0;
@@ -220,6 +220,48 @@
       width: 800px;
       padding: 24px;
       background: white;
+    }
+
+    .factura-tabla {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+    }
+
+    .factura-tabla th,
+    .factura-tabla td {
+      border: 1px solid #d1d5db;
+      padding: 8px;
+      font-size: 13px;
+      text-align: left;
+    }
+
+    .factura-tabla th {
+      background: #eff6ff;
+    }
+
+    .factura-total {
+      margin-top: 12px;
+      text-align: right;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .firma {
+      margin-top: 28px;
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .firma-linea {
+      width: 48%;
+      border-top: 1px solid #6b7280;
+      padding-top: 6px;
+      font-size: 13px;
+      color: #374151;
+      text-align: center;
     }
   </style>
 </head>
@@ -290,6 +332,82 @@
 
       <label>Observaciones</label>
       <textarea id="observaciones" placeholder="Detalle final para el cliente"></textarea>
+    </section>
+
+    <section class="card">
+      <h2>Presupuesto tipo factura</h2>
+
+      <div class="grid grid-4">
+        <div>
+          <label>Descripción 1</label>
+          <input id="desc1" type="text" placeholder="Servicio / repuesto / instalación" />
+        </div>
+        <div>
+          <label>Cantidad</label>
+          <input id="cant1" type="number" value="1" min="0" />
+        </div>
+        <div>
+          <label>Precio unitario</label>
+          <input id="precio1" type="number" value="0" min="0" />
+        </div>
+        <div>
+          <label>Total</label>
+          <input id="total1" type="text" readonly />
+        </div>
+      </div>
+
+      <div class="grid grid-4">
+        <div>
+          <label>Descripción 2</label>
+          <input id="desc2" type="text" placeholder="Servicio / repuesto / instalación" />
+        </div>
+        <div>
+          <label>Cantidad</label>
+          <input id="cant2" type="number" value="0" min="0" />
+        </div>
+        <div>
+          <label>Precio unitario</label>
+          <input id="precio2" type="number" value="0" min="0" />
+        </div>
+        <div>
+          <label>Total</label>
+          <input id="total2" type="text" readonly />
+        </div>
+      </div>
+
+      <div class="grid grid-4">
+        <div>
+          <label>Descripción 3</label>
+          <input id="desc3" type="text" placeholder="Servicio / repuesto / instalación" />
+        </div>
+        <div>
+          <label>Cantidad</label>
+          <input id="cant3" type="number" value="0" min="0" />
+        </div>
+        <div>
+          <label>Precio unitario</label>
+          <input id="precio3" type="number" value="0" min="0" />
+        </div>
+        <div>
+          <label>Total</label>
+          <input id="total3" type="text" readonly />
+        </div>
+      </div>
+
+      <div class="grid grid-3">
+        <div>
+          <label>Validez del presupuesto</label>
+          <input id="validez" type="text" placeholder="7 días" />
+        </div>
+        <div>
+          <label>Forma de pago</label>
+          <input id="pago" type="text" placeholder="Contado / Transferencia / Efectivo" />
+        </div>
+        <div>
+          <label>Total general</label>
+          <input id="total_general" type="text" readonly />
+        </div>
+      </div>
 
       <button class="success" onclick="guardar()">Guardar informe</button>
       <button class="pdfbtn" onclick="generarPDF()">📄 Generar PDF</button>
@@ -316,7 +434,7 @@
     <div class="pdf-area">
       <div class="pdf-header">
         <img src="logo.png" alt="Logo MHEL" />
-        <h3>Informe Técnico</h3>
+        <h3>Informe Técnico / Presupuesto</h3>
         <p>Calefacción • Energía Solar • Aire Acondicionado</p>
       </div>
 
@@ -336,18 +454,34 @@
       </div>
 
       <div class="pdf-section">
-        <h4>Parámetros verificados</h4>
-        <div class="pdf-line" id="pdf_parametros"></div>
+        <h4>Revisión técnica</h4>
+        <div class="pdf-line"><strong>Parámetros verificados:</strong> <span id="pdf_parametros"></span></div>
+        <div class="pdf-line"><strong>Trabajo realizado:</strong> <span id="pdf_trabajo"></span></div>
+        <div class="pdf-line"><strong>Observaciones:</strong> <span id="pdf_observaciones"></span></div>
       </div>
 
       <div class="pdf-section">
-        <h4>Trabajo realizado</h4>
-        <div class="pdf-line" id="pdf_trabajo"></div>
+        <h4>Presupuesto</h4>
+        <table class="factura-tabla">
+          <thead>
+            <tr>
+              <th>Descripción</th>
+              <th>Cantidad</th>
+              <th>Precio unit.</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody id="pdf_items"></tbody>
+        </table>
+
+        <div class="pdf-line" style="margin-top:10px;"><strong>Validez:</strong> <span id="pdf_validez"></span></div>
+        <div class="pdf-line"><strong>Forma de pago:</strong> <span id="pdf_pago"></span></div>
+        <div class="factura-total">TOTAL GENERAL: <span id="pdf_total_general"></span></div>
       </div>
 
-      <div class="pdf-section">
-        <h4>Observaciones</h4>
-        <div class="pdf-line" id="pdf_observaciones"></div>
+      <div class="firma">
+        <div class="firma-linea">Firma del técnico</div>
+        <div class="firma-linea">Firma del cliente</div>
       </div>
     </div>
   </div>
@@ -356,7 +490,34 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <script>
-    const ids = ["cliente","telefono","direccion","fecha","tipo","marca","modelo","parametros","trabajo","observaciones"];
+    const ids = [
+      "cliente","telefono","direccion","fecha","tipo","marca","modelo",
+      "parametros","trabajo","observaciones",
+      "desc1","cant1","precio1","total1",
+      "desc2","cant2","precio2","total2",
+      "desc3","cant3","precio3","total3",
+      "validez","pago","total_general"
+    ];
+
+    function formatoMoneda(valor) {
+      return "$ " + Number(valor || 0).toLocaleString("es-AR");
+    }
+
+    function obtenerNumero(id) {
+      return parseFloat(document.getElementById(id)?.value || 0);
+    }
+
+    function actualizarTotales() {
+      const total1 = obtenerNumero("cant1") * obtenerNumero("precio1");
+      const total2 = obtenerNumero("cant2") * obtenerNumero("precio2");
+      const total3 = obtenerNumero("cant3") * obtenerNumero("precio3");
+      const totalGeneral = total1 + total2 + total3;
+
+      document.getElementById("total1").value = formatoMoneda(total1);
+      document.getElementById("total2").value = formatoMoneda(total2);
+      document.getElementById("total3").value = formatoMoneda(total3);
+      document.getElementById("total_general").value = formatoMoneda(totalGeneral);
+    }
 
     function obtenerDatos() {
       const datos = {};
@@ -368,7 +529,7 @@
     }
 
     function armarTexto(datos) {
-      return `MHEL - INFORME TÉCNICO
+      return `MHEL - INFORME TÉCNICO / PRESUPUESTO
 
 Cliente: ${datos.cliente}
 Teléfono: ${datos.telefono}
@@ -386,7 +547,16 @@ Trabajo realizado:
 ${datos.trabajo}
 
 Observaciones:
-${datos.observaciones}`;
+${datos.observaciones}
+
+PRESUPUESTO:
+1) ${datos.desc1} - Cant: ${datos.cant1} - Unit: ${datos.precio1} - Total: ${datos.total1}
+2) ${datos.desc2} - Cant: ${datos.cant2} - Unit: ${datos.precio2} - Total: ${datos.total2}
+3) ${datos.desc3} - Cant: ${datos.cant3} - Unit: ${datos.precio3} - Total: ${datos.total3}
+
+Validez: ${datos.validez}
+Forma de pago: ${datos.pago}
+Total general: ${datos.total_general}`;
     }
 
     function mostrarUltimo() {
@@ -398,6 +568,7 @@ ${datos.observaciones}`;
     }
 
     function guardar() {
+      actualizarTotales();
       const datos = obtenerDatos();
       const texto = armarTexto(datos);
       localStorage.setItem("mhel_informe", texto);
@@ -406,20 +577,36 @@ ${datos.observaciones}`;
     }
 
     async function copiarWhatsApp() {
+      actualizarTotales();
       const texto = armarTexto(obtenerDatos());
       try {
         await navigator.clipboard.writeText(texto);
         alert("Texto copiado. Ahora lo podés pegar en WhatsApp.");
       } catch (e) {
-        alert("No se pudo copiar automáticamente. Guardá el informe y copiá manualmente el texto desde la parte inferior.");
+        alert("No se pudo copiar automáticamente.");
       }
     }
 
     function limpiarFormulario() {
       ids.forEach(id => {
         const el = document.getElementById(id);
-        if (el) el.value = "";
+        if (el) {
+          if (el.tagName === "SELECT") {
+            el.selectedIndex = 0;
+          } else if (id === "fecha") {
+            el.value = new Date().toISOString().split("T")[0];
+          } else if (id === "cant1") {
+            el.value = 1;
+          } else if (id.startsWith("cant") || id.startsWith("precio")) {
+            el.value = 0;
+          } else if (id.startsWith("total") || id === "total_general") {
+            el.value = "";
+          } else {
+            el.value = "";
+          }
+        }
       });
+      actualizarTotales();
     }
 
     function cargarDatosPDF(datos) {
@@ -433,10 +620,37 @@ ${datos.observaciones}`;
       document.getElementById("pdf_parametros").textContent = datos.parametros;
       document.getElementById("pdf_trabajo").textContent = datos.trabajo;
       document.getElementById("pdf_observaciones").textContent = datos.observaciones;
+      document.getElementById("pdf_validez").textContent = datos.validez;
+      document.getElementById("pdf_pago").textContent = datos.pago;
+      document.getElementById("pdf_total_general").textContent = datos.total_general;
+
+      const tbody = document.getElementById("pdf_items");
+      tbody.innerHTML = "";
+
+      const items = [
+        [datos.desc1, datos.cant1, datos.precio1, datos.total1],
+        [datos.desc2, datos.cant2, datos.precio2, datos.total2],
+        [datos.desc3, datos.cant3, datos.precio3, datos.total3]
+      ];
+
+      items.forEach(item => {
+        const [desc, cant, precio, total] = item;
+        if ((desc && desc.trim() !== "") || (Number(cant) > 0 && Number(precio) > 0)) {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${desc || ""}</td>
+            <td>${cant || ""}</td>
+            <td>${precio ? formatoMoneda(precio) : ""}</td>
+            <td>${total || ""}</td>
+          `;
+          tbody.appendChild(tr);
+        }
+      });
     }
 
     async function generarPDF() {
       try {
+        actualizarTotales();
         const { jsPDF } = window.jspdf;
         const datos = obtenerDatos();
         cargarDatosPDF(datos);
@@ -452,11 +666,10 @@ ${datos.observaciones}`;
         const imgData = canvas.toDataURL("image/png");
         const pdf = new jsPDF("p", "mm", "a4");
 
-        const pageWidth = 200;
-        const imgWidth = pageWidth;
+        const imgWidth = 200;
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-       pdf.addImage(imgData, "PNG", 5, 5, imgWidth, imgHeight);
+        pdf.addImage(imgData, "PNG", 5, 5, imgWidth, imgHeight);
         pdf.save("Informe_MHEL.pdf");
       } catch (error) {
         console.error(error);
@@ -464,11 +677,17 @@ ${datos.observaciones}`;
       }
     }
 
+    ["cant1","precio1","cant2","precio2","cant3","precio3"].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener("input", actualizarTotales);
+    });
+
     const fecha = document.getElementById("fecha");
     if (fecha) {
       fecha.value = new Date().toISOString().split("T")[0];
     }
 
+    actualizarTotales();
     mostrarUltimo();
 
     if ("serviceWorker" in navigator) {
