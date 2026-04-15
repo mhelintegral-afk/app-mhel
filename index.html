@@ -8,53 +8,56 @@
   <meta name="description" content="App técnica MHEL para servicio, revisión y carga de informes." />
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="icon-192.png" />
+
   <style>
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       background: #f3f4f6;
       color: #111827;
     }
+
     header {
-      background: linear-gradient(90deg, #111827, #1f2937);
+      background: linear-gradient(90deg, #0f172a, #1e3a8a);
       color: white;
-      padding: 18px 16px;
+      padding: 12px 20px;
       position: sticky;
       top: 0;
       z-index: 10;
       box-shadow: 0 2px 10px rgba(0,0,0,.15);
     }
+
     .brand {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 12px;
       max-width: 900px;
       margin: 0 auto;
     }
+
     .brand img {
-      width: 52px;
-      height: 52px;
-      border-radius: 14px;
-      background: white;
-      object-fit: cover;
-      padding: 4px;
+      height: 70px;
+      width: auto;
+      object-fit: contain;
+      margin-bottom: 5px;
+      display: block;
     }
-    .brand h1 {
-      margin: 0;
-      font-size: 22px;
-      line-height: 1.1;
-    }
+
     .brand p {
-      margin: 3px 0 0;
-      font-size: 13px;
-      opacity: .9;
+      margin: 0;
+      font-size: 14px;
+      color: white;
+      text-align: center;
     }
+
     main {
       max-width: 900px;
       margin: 0 auto;
       padding: 16px;
     }
+
     .card {
       background: white;
       border-radius: 18px;
@@ -62,16 +65,19 @@
       margin-bottom: 14px;
       box-shadow: 0 4px 18px rgba(0,0,0,.08);
     }
+
     .card h2 {
       margin: 0 0 12px;
       font-size: 18px;
     }
+
     label {
       display: block;
       margin: 10px 0 6px;
       font-size: 14px;
       font-weight: bold;
     }
+
     input, textarea, select {
       width: 100%;
       border: 1px solid #d1d5db;
@@ -80,21 +86,29 @@
       font-size: 15px;
       background: #fff;
     }
-    textarea { min-height: 92px; resize: vertical; }
+
+    textarea {
+      min-height: 92px;
+      resize: vertical;
+    }
+
     .grid {
       display: grid;
       gap: 12px;
     }
+
     @media (min-width: 700px) {
       .grid-2 { grid-template-columns: 1fr 1fr; }
       .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
     }
+
     .actions {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
       margin-top: 12px;
     }
+
     button {
       border: none;
       border-radius: 14px;
@@ -103,14 +117,37 @@
       font-weight: bold;
       cursor: pointer;
     }
-    .primary { background: #2563eb; color: white; }
-    .secondary { background: #e5e7eb; color: #111827; }
-    .success { background: #059669; color: white; width: 100%; margin-top: 10px; }
+
+    .primary {
+      background: #2563eb;
+      color: white;
+    }
+
+    .secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .success {
+      background: #059669;
+      color: white;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .pdfbtn {
+      background: #2563eb;
+      color: white;
+      width: 100%;
+      margin-top: 10px;
+    }
+
     .mini {
       font-size: 13px;
       color: #4b5563;
       margin-top: 8px;
     }
+
     .saved-box {
       white-space: pre-wrap;
       background: #f9fafb;
@@ -120,21 +157,78 @@
       font-size: 14px;
       line-height: 1.5;
     }
+
     footer {
       text-align: center;
       color: #6b7280;
       font-size: 12px;
       padding: 20px 16px 28px;
     }
+
+    .pdf-area {
+      background: white;
+      color: #111827;
+    }
+
+    .pdf-header {
+      text-align: center;
+      margin-bottom: 16px;
+      border-bottom: 2px solid #d1d5db;
+      padding-bottom: 12px;
+    }
+
+    .pdf-header img {
+      max-height: 70px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto 8px;
+    }
+
+    .pdf-header h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .pdf-header p {
+      margin: 4px 0 0;
+      font-size: 13px;
+      color: #374151;
+    }
+
+    .pdf-section {
+      margin-bottom: 14px;
+    }
+
+    .pdf-section h4 {
+      margin: 0 0 8px;
+      font-size: 15px;
+      color: #1e3a8a;
+    }
+
+    .pdf-line {
+      margin: 4px 0;
+      font-size: 14px;
+    }
+
+    .hidden-pdf {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      width: 800px;
+      padding: 24px;
+      background: white;
+    }
   </style>
-<header style="background: linear-gradient(90deg, #0f172a, #1e3a8a); padding: 12px 20px;">
-  <div style="display:flex; flex-direction:column; align-items:center; max-width:900px; margin:auto;">
-    <img src="logo.png" alt="Logo MHEL" style="height:70px; object-fit:contain; margin-bottom:5px;">
-    <p style="margin:0; color:white; font-size:14px;">
-      Calefacción • Energía Solar • Aire Acondicionado
-    </p>
-  </div>
-</header>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <img src="logo.png" alt="Logo MHEL" />
+      <p>Calefacción • Energía Solar • Aire Acondicionado</p>
+    </div>
+  </header>
 
   <main>
     <section class="card">
@@ -185,6 +279,7 @@
 
     <section class="card">
       <h2>Revisión técnica</h2>
+
       <label>Parámetros verificados</label>
       <textarea id="parametros" placeholder="Presión, temperatura, tensión, consumo, códigos de error..."></textarea>
 
@@ -195,10 +290,10 @@
       <textarea id="observaciones" placeholder="Detalle final para el cliente"></textarea>
 
       <button class="success" onclick="guardar()">Guardar informe</button>
+      <button class="pdfbtn" onclick="generarPDF()">📄 Generar PDF</button>
+
       <div class="mini">Se guarda en el navegador del celular para que puedas volver a verlo.</div>
-<button onclick="generarPDF()" style="background:#2563eb;color:white;padding:10px 15px;border:none;border-radius:6px;margin-top:10px;">
-  📄 Generar PDF
-</button>
+
       <div class="actions">
         <button class="primary" onclick="copiarWhatsApp()">Copiar texto para WhatsApp</button>
         <button class="secondary" onclick="limpiarFormulario()">Limpiar</button>
@@ -215,12 +310,58 @@
     MHEL Servicio Técnico
   </footer>
 
+  <div id="pdfContent" class="hidden-pdf">
+    <div class="pdf-area">
+      <div class="pdf-header">
+        <img src="logo.png" alt="Logo MHEL" />
+        <h3>Informe Técnico</h3>
+        <p>Calefacción • Energía Solar • Aire Acondicionado</p>
+      </div>
+
+      <div class="pdf-section">
+        <h4>Datos del cliente</h4>
+        <div class="pdf-line"><strong>Nombre:</strong> <span id="pdf_cliente"></span></div>
+        <div class="pdf-line"><strong>Teléfono:</strong> <span id="pdf_telefono"></span></div>
+        <div class="pdf-line"><strong>Dirección:</strong> <span id="pdf_direccion"></span></div>
+        <div class="pdf-line"><strong>Fecha:</strong> <span id="pdf_fecha"></span></div>
+      </div>
+
+      <div class="pdf-section">
+        <h4>Equipo</h4>
+        <div class="pdf-line"><strong>Tipo:</strong> <span id="pdf_tipo"></span></div>
+        <div class="pdf-line"><strong>Marca:</strong> <span id="pdf_marca"></span></div>
+        <div class="pdf-line"><strong>Modelo:</strong> <span id="pdf_modelo"></span></div>
+      </div>
+
+      <div class="pdf-section">
+        <h4>Parámetros verificados</h4>
+        <div class="pdf-line" id="pdf_parametros"></div>
+      </div>
+
+      <div class="pdf-section">
+        <h4>Trabajo realizado</h4>
+        <div class="pdf-line" id="pdf_trabajo"></div>
+      </div>
+
+      <div class="pdf-section">
+        <h4>Observaciones</h4>
+        <div class="pdf-line" id="pdf_observaciones"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
   <script>
     const ids = ["cliente","telefono","direccion","fecha","tipo","marca","modelo","parametros","trabajo","observaciones"];
 
     function obtenerDatos() {
       const datos = {};
-      ids.forEach(id => datos[id] = document.getElementById(id).value || "");
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        datos[id] = el ? el.value : "";
+      });
       return datos;
     }
 
@@ -248,7 +389,10 @@ ${datos.observaciones}`;
 
     function mostrarUltimo() {
       const guardado = localStorage.getItem("mhel_informe");
-      document.getElementById("ultimoGuardado").textContent = guardado || "Todavía no hay informe guardado.";
+      const caja = document.getElementById("ultimoGuardado");
+      if (caja) {
+        caja.textContent = guardado || "Todavía no hay informe guardado.";
+      }
     }
 
     function guardar() {
@@ -270,10 +414,59 @@ ${datos.observaciones}`;
     }
 
     function limpiarFormulario() {
-      ids.forEach(id => document.getElementById(id).value = "");
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = "";
+      });
     }
 
-    document.getElementById("fecha").value = new Date().toISOString().split("T")[0];
+    function cargarDatosPDF(datos) {
+      document.getElementById("pdf_cliente").textContent = datos.cliente;
+      document.getElementById("pdf_telefono").textContent = datos.telefono;
+      document.getElementById("pdf_direccion").textContent = datos.direccion;
+      document.getElementById("pdf_fecha").textContent = datos.fecha;
+      document.getElementById("pdf_tipo").textContent = datos.tipo;
+      document.getElementById("pdf_marca").textContent = datos.marca;
+      document.getElementById("pdf_modelo").textContent = datos.modelo;
+      document.getElementById("pdf_parametros").textContent = datos.parametros;
+      document.getElementById("pdf_trabajo").textContent = datos.trabajo;
+      document.getElementById("pdf_observaciones").textContent = datos.observaciones;
+    }
+
+    async function generarPDF() {
+      try {
+        const { jsPDF } = window.jspdf;
+        const datos = obtenerDatos();
+        cargarDatosPDF(datos);
+
+        const contenidoPDF = document.getElementById("pdfContent");
+
+        const canvas = await html2canvas(contenidoPDF, {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: "#ffffff"
+        });
+
+        const imgData = canvas.toDataURL("image/png");
+        const pdf = new jsPDF("p", "mm", "a4");
+
+        const pageWidth = 190;
+        const imgWidth = pageWidth;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
+        pdf.save("Informe_MHEL.pdf");
+      } catch (error) {
+        console.error(error);
+        alert("No se pudo generar el PDF.");
+      }
+    }
+
+    const fecha = document.getElementById("fecha");
+    if (fecha) {
+      fecha.value = new Date().toISOString().split("T")[0];
+    }
+
     mostrarUltimo();
 
     if ("serviceWorker" in navigator) {
@@ -281,26 +474,6 @@ ${datos.observaciones}`;
         navigator.serviceWorker.register("./sw.js").catch(() => {});
       });
     }
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-<script>
-function generarPDF() {
-  const { jsPDF } = window.jspdf;
-
-  html2canvas(document.body).then(canvas => {
-    const imgData = canvas.toDataURL("image/png");
-
-    const pdf = new jsPDF("p", "mm", "a4");
-
-    const ancho = 190;
-    const alto = (canvas.height * ancho) / canvas.width;
-
-    pdf.addImage(imgData, "PNG", 10, 10, ancho, alto);
-    pdf.save("Informe_MHEL.pdf");
-  });
-}
-</script>
-
+  </script>
 </body>
 </html>
