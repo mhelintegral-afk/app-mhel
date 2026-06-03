@@ -2,715 +2,238 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MHEL Servicio Técnico</title>
-  <meta name="theme-color" content="#111827" />
-  <meta name="description" content="App técnica MHEL para servicio, revisión y carga de informes." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>MHEL PRO - Informes y Presupuestos</title>
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="description" content="App MHEL PRO para servicio técnico, presupuestos, PDF, WhatsApp, historial y clientes." />
   <link rel="manifest" href="manifest.json" />
-  <link rel="icon" href="icon-192.png" />
+  <link rel="icon" href="logo.png" />
 
   <style>
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f3f4f6;
-      color: #111827;
+    :root{
+      --azul:#1e3a8a;
+      --azul2:#2563eb;
+      --oscuro:#0f172a;
+      --verde:#059669;
+      --gris:#f3f4f6;
+      --borde:#d1d5db;
+      --texto:#111827;
+      --muted:#6b7280;
+      --rojo:#dc2626;
     }
-
-    header {
-      background: linear-gradient(90deg, #0f172a, #1e3a8a);
-      color: white;
-      padding: 12px 20px;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      box-shadow: 0 2px 10px rgba(0,0,0,.15);
-    }
-
-    .brand {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .brand img {
-      height: 70px;
-      width: auto;
-      object-fit: contain;
-      margin-bottom: 5px;
-      display: block;
-    }
-
-    .brand p {
-      margin: 0;
-      font-size: 14px;
-      color: white;
-      text-align: center;
-    }
-
-    main {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 16px;
-    }
-
-    .card {
-      background: white;
-      border-radius: 18px;
-      padding: 16px;
-      margin-bottom: 14px;
-      box-shadow: 0 4px 18px rgba(0,0,0,.08);
-    }
-
-    .card h2 {
-      margin: 0 0 12px;
-      font-size: 18px;
-    }
-
-    label {
-      display: block;
-      margin: 10px 0 6px;
-      font-size: 14px;
-      font-weight: bold;
-    }
-
-    input, textarea, select {
-      width: 100%;
-      border: 1px solid #d1d5db;
-      border-radius: 12px;
-      padding: 12px;
-      font-size: 15px;
-      background: #fff;
-    }
-
-    textarea {
-      min-height: 92px;
-      resize: vertical;
-    }
-
-    .grid {
-      display: grid;
-      gap: 12px;
-    }
-
-    @media (min-width: 700px) {
-      .grid-2 { grid-template-columns: 1fr 1fr; }
-      .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
-      .grid-4 { grid-template-columns: 2fr 1fr 1fr 1fr; }
-    }
-
-    .actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 12px;
-    }
-
-    button {
-      border: none;
-      border-radius: 14px;
-      padding: 13px 14px;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .primary {
-      background: #2563eb;
-      color: white;
-    }
-
-    .secondary {
-      background: #e5e7eb;
-      color: #111827;
-    }
-
-    .success {
-      background: #059669;
-      color: white;
-      width: 100%;
-      margin-top: 10px;
-    }
-
-    .pdfbtn {
-      background: #2563eb;
-      color: white;
-      width: 100%;
-      margin-top: 10px;
-    }
-
-    .mini {
-      font-size: 13px;
-      color: #4b5563;
-      margin-top: 8px;
-    }
-
-    .saved-box {
-      white-space: pre-wrap;
-      background: #f9fafb;
-      border: 1px dashed #d1d5db;
-      border-radius: 12px;
-      padding: 12px;
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    footer {
-      text-align: center;
-      color: #6b7280;
-      font-size: 12px;
-      padding: 20px 16px 28px;
-    }
-
-    .pdf-area {
-      background: white;
-      color: #111827;
-      font-size: 16px;
-    }
-
-    .pdf-header {
-      text-align: center;
-      margin-bottom: 16px;
-      border-bottom: 2px solid #d1d5db;
-      padding-bottom: 12px;
-    }
-
-    .pdf-header img {
-      max-height: 75px;
-      width: auto;
-      object-fit: contain;
-      display: block;
-      margin: 0 auto 8px;
-    }
-
-    .pdf-header h3 {
-      margin: 0;
-      font-size: 22px;
-    }
-
-    .pdf-header p {
-      margin: 4px 0 0;
-      font-size: 13px;
-      color: #374151;
-    }
-
-    .pdf-section {
-      margin-bottom: 14px;
-    }
-
-    .pdf-section h4 {
-      margin: 0 0 8px;
-      font-size: 15px;
-      color: #1e3a8a;
-    }
-
-    .pdf-line {
-      margin: 4px 0;
-      font-size: 14px;
-    }
-
-    .hidden-pdf {
-      position: absolute;
-      left: -9999px;
-      top: 0;
-      width: 800px;
-      padding: 24px;
-      background: white;
-    }
-
-    .factura-tabla {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 8px;
-    }
-
-    .factura-tabla th,
-    .factura-tabla td {
-      border: 1px solid #d1d5db;
-      padding: 8px;
-      font-size: 13px;
-      text-align: left;
-    }
-
-    .factura-tabla th {
-      background: #eff6ff;
-    }
-
-    .factura-total {
-      margin-top: 12px;
-      text-align: right;
-      font-size: 16px;
-      font-weight: bold;
-    }
-
-    .firma {
-      margin-top: 28px;
-      padding-top: 20px;
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-    }
-
-    .firma-linea {
-      width: 48%;
-      border-top: 1px solid #6b7280;
-      padding-top: 6px;
-      font-size: 13px;
-      color: #374151;
-      text-align: center;
-    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Arial,sans-serif;background:var(--gris);color:var(--texto);padding-bottom:86px}
+    header{background:linear-gradient(90deg,#0f172a,#1e3a8a);color:white;padding:12px 14px;position:sticky;top:0;z-index:10;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+    .brand{display:flex;align-items:center;gap:12px;max-width:1000px;margin:0 auto}
+    .brand img{height:58px;max-width:170px;width:auto;object-fit:contain;background:white;border-radius:12px;padding:4px}
+    .brand-text h1{font-size:18px;line-height:1;margin:0 0 4px}.brand-text p{font-size:12px;margin:0;opacity:.95}
+    main{max-width:1000px;margin:0 auto;padding:14px}
+    .card{background:white;border-radius:18px;padding:15px;margin-bottom:14px;box-shadow:0 4px 18px rgba(0,0,0,.08)}
+    .card h2{font-size:18px;margin:0 0 10px}.card h3{font-size:15px;margin:14px 0 8px;color:var(--azul)}
+    label{display:block;margin:10px 0 6px;font-size:13px;font-weight:bold}
+    input,textarea,select{width:100%;border:1px solid var(--borde);border-radius:12px;padding:12px;font-size:15px;background:#fff}
+    textarea{min-height:86px;resize:vertical}.grid{display:grid;gap:10px}
+    @media(min-width:760px){.grid-2{grid-template-columns:1fr 1fr}.grid-3{grid-template-columns:1fr 1fr 1fr}.grid-4{grid-template-columns:2fr .7fr 1fr 1fr}.grid-5{grid-template-columns:1fr 1fr 1fr 1fr 1fr}}
+    .pill{display:inline-flex;align-items:center;gap:6px;background:#eff6ff;color:#1e3a8a;border:1px solid #bfdbfe;border-radius:999px;padding:8px 10px;font-size:13px;font-weight:bold;margin:3px 4px 3px 0}
+    .actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}.actions-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-top:10px}
+    button{border:0;border-radius:14px;padding:13px 12px;font-size:14px;font-weight:bold;cursor:pointer;min-height:46px}.primary{background:var(--azul2);color:white}.secondary{background:#e5e7eb;color:#111827}.success{background:var(--verde);color:white}.danger{background:var(--rojo);color:white}.dark{background:var(--oscuro);color:white}.full{width:100%;margin-top:10px}.mini{font-size:12px;color:#4b5563;margin-top:8px;line-height:1.35}.saved-box{white-space:pre-wrap;background:#f9fafb;border:1px dashed var(--borde);border-radius:12px;padding:12px;font-size:13px;line-height:1.45;max-height:240px;overflow:auto}
+    .tabs{position:fixed;left:0;right:0;bottom:0;background:white;border-top:1px solid #d1d5db;display:grid;grid-template-columns:repeat(4,1fr);z-index:20;box-shadow:0 -4px 16px rgba(0,0,0,.08)}
+    .tab-btn{border-radius:0;background:white;color:#111827;font-size:12px;padding:9px 4px;min-height:58px}.tab-btn.active{background:#eff6ff;color:#1e3a8a}.view{display:none}.view.active{display:block}
+    table{width:100%;border-collapse:collapse}th,td{border:1px solid var(--borde);padding:8px;font-size:13px;text-align:left}th{background:#eff6ff}.table-wrap{overflow-x:auto;border-radius:12px}.total-box{font-size:20px;font-weight:bold;text-align:right;padding:12px;background:#f8fafc;border-radius:14px;border:1px solid #e5e7eb;margin-top:10px}
+    .hidden-pdf{position:absolute;left:-9999px;top:0;width:800px;padding:24px;background:white}.pdf-area{background:white;color:#111827;font-size:16px}.pdf-header{text-align:center;margin-bottom:16px;border-bottom:2px solid #d1d5db;padding-bottom:12px}.pdf-header img{max-height:75px;width:auto;object-fit:contain;display:block;margin:0 auto 8px}.pdf-header h3{margin:0;font-size:22px}.pdf-header p{margin:4px 0 0;font-size:13px;color:#374151}.pdf-section{margin-bottom:14px}.pdf-section h4{margin:0 0 8px;font-size:15px;color:#1e3a8a}.pdf-line{margin:4px 0;font-size:14px}.factura-tabla{width:100%;border-collapse:collapse;margin-top:8px}.factura-tabla th,.factura-tabla td{border:1px solid #d1d5db;padding:8px;font-size:13px;text-align:left}.factura-tabla th{background:#eff6ff}.factura-total{margin-top:12px;text-align:right;font-size:17px;font-weight:bold}.firma{margin-top:28px;padding-top:20px;display:flex;justify-content:space-between;gap:20px}.firma-linea{width:48%;border-top:1px solid #6b7280;padding-top:6px;font-size:13px;color:#374151;text-align:center}.datos-mhel{margin-top:18px;text-align:center;font-size:12px;color:#4b5563;border-top:1px solid #d1d5db;padding-top:10px}
+    @media(max-width:520px){.brand img{height:48px;max-width:135px}.brand-text h1{font-size:16px}.brand-text p{font-size:11px}.actions,.actions-3{grid-template-columns:1fr}.card{border-radius:16px;padding:14px}main{padding:10px}.total-box{text-align:left;font-size:18px}.hidden-pdf{width:760px}.tabs{grid-template-columns:repeat(4,1fr)}}
   </style>
 </head>
 <body>
-
   <header>
     <div class="brand">
       <img src="logo.png" alt="Logo MHEL" />
-      <p>Calefacción • Energía Solar • Aire Acondicionado</p>
+      <div class="brand-text">
+        <h1>MHEL PRO</h1>
+        <p>Calefacción • Energía Solar • Aire Acondicionado</p>
+      </div>
     </div>
   </header>
 
   <main>
-    <section class="card">
-      <h2>Datos del cliente</h2>
-      <div class="grid grid-2">
-        <div>
-          <label>Nombre</label>
-          <input id="cliente" type="text" placeholder="Nombre del cliente" />
+    <section id="vistaInforme" class="view active">
+      <section class="card">
+        <h2>Informe / Presupuesto</h2>
+        <span class="pill">Nº <span id="numeroMostrado"></span></span>
+        <span class="pill">Versión celular</span>
+        <div class="grid grid-3">
+          <div><label>Tipo de documento</label><select id="docTipo"><option>Informe Técnico / Presupuesto</option><option>Presupuesto</option><option>Informe Técnico</option><option>Orden de Trabajo</option></select></div>
+          <div><label>Estado</label><select id="estado"><option>Borrador</option><option>Enviado</option><option>Aprobado</option><option>Rechazado</option><option>Finalizado</option></select></div>
+          <div><label>Fecha</label><input id="fecha" type="date" /></div>
         </div>
-        <div>
-          <label>Teléfono</label>
-          <input id="telefono" type="text" placeholder="223..." />
+      </section>
+
+      <section class="card">
+        <h2>Datos del cliente</h2>
+        <div class="grid grid-2">
+          <div><label>Nombre</label><input id="cliente" type="text" placeholder="Nombre del cliente" list="clientesList" oninput="buscarClienteRapido()" /></div>
+          <div><label>Teléfono / WhatsApp</label><input id="telefono" type="text" placeholder="223..." /></div>
+          <div><label>Dirección</label><input id="direccion" type="text" placeholder="Dirección" /></div>
+          <div><label>Email / referencia</label><input id="email" type="text" placeholder="Email o dato de contacto" /></div>
         </div>
-        <div>
-          <label>Dirección</label>
-          <input id="direccion" type="text" placeholder="Dirección" />
+        <datalist id="clientesList"></datalist>
+        <button class="secondary full" onclick="guardarClienteDesdeFormulario()">💾 Guardar cliente en base MHEL</button>
+      </section>
+
+      <section class="card">
+        <h2>Equipo</h2>
+        <div class="grid grid-3">
+          <div><label>Tipo</label><select id="tipo"><option>Bomba de calor</option><option>Aire acondicionado</option><option>Caldera</option><option>Radiadores</option><option>Termotanque</option><option>Solar térmico</option><option>Otro</option></select></div>
+          <div><label>Marca</label><input id="marca" type="text" placeholder="LG, Daikin, Peisa, etc." /></div>
+          <div><label>Modelo</label><input id="modelo" type="text" placeholder="Modelo" /></div>
         </div>
-        <div>
-          <label>Fecha</label>
-          <input id="fecha" type="date" />
+      </section>
+
+      <section class="card">
+        <h2>Revisión técnica</h2>
+        <label>Parámetros verificados</label><textarea id="parametros" placeholder="Presión, temperatura, tensión, consumo, códigos de error..."></textarea>
+        <label>Trabajo realizado</label><textarea id="trabajo" placeholder="Limpieza, control, reparación, pruebas, carga de gas, etc."></textarea>
+        <label>Observaciones</label><textarea id="observaciones" placeholder="Detalle final para el cliente"></textarea>
+      </section>
+
+      <section class="card">
+        <h2>Presupuesto tipo factura</h2>
+        <div id="itemsContainer"></div>
+        <button class="secondary full" onclick="agregarItem()">➕ Agregar renglón</button>
+        <div class="grid grid-3">
+          <div><label>Moneda</label><select id="moneda" onchange="actualizarTotales()"><option value="$">Pesos $</option><option value="USD">Dólares USD</option></select></div>
+          <div><label>Validez</label><input id="validez" type="text" placeholder="7 días" /></div>
+          <div><label>Forma de pago</label><input id="pago" type="text" placeholder="Transferencia / efectivo" /></div>
         </div>
-      </div>
+        <div class="total-box">TOTAL: <span id="total_general"></span></div>
+        <div class="actions-3">
+          <button class="success" onclick="guardarDocumento()">💾 Guardar</button>
+          <button class="primary" onclick="generarPDF()">📄 PDF</button>
+          <button class="dark" onclick="enviarWhatsApp()">📲 WhatsApp</button>
+        </div>
+        <div class="actions">
+          <button class="secondary" onclick="nuevoDocumento()">🧾 Nuevo número</button>
+          <button class="secondary" onclick="limpiarFormularioSinNumero()">🧹 Limpiar</button>
+        </div>
+        <div class="mini">El historial y la base de clientes se guardan en este celular/navegador. Si cambiás de equipo, conviene exportar respaldo.</div>
+      </section>
+
+      <section class="card">
+        <h2>Vista rápida</h2>
+        <div id="ultimoGuardado" class="saved-box">Todavía no hay documento guardado.</div>
+      </section>
     </section>
 
-    <section class="card">
-      <h2>Equipo</h2>
-      <div class="grid grid-3">
-        <div>
-          <label>Tipo</label>
-          <select id="tipo">
-            <option>Bomba de calor</option>
-            <option>Aire acondicionado</option>
-            <option>Caldera</option>
-            <option>Termotanque</option>
-            <option>Otro</option>
-          </select>
-        </div>
-        <div>
-          <label>Marca</label>
-          <input id="marca" type="text" placeholder="LG, Daikin, etc." />
-        </div>
-        <div>
-          <label>Modelo</label>
-          <input id="modelo" type="text" placeholder="Modelo" />
-        </div>
-      </div>
+    <section id="vistaHistorial" class="view">
+      <section class="card">
+        <h2>Historial de documentos</h2>
+        <input id="buscarHistorial" type="text" placeholder="Buscar por cliente, número, teléfono, estado..." oninput="renderHistorial()" />
+        <div class="actions"><button class="secondary" onclick="exportarRespaldo()">⬇️ Exportar respaldo</button><button class="danger" onclick="borrarHistorial()">🗑️ Borrar historial</button></div>
+      </section>
+      <section class="card"><div id="historialLista" class="table-wrap"></div></section>
     </section>
 
-    <section class="card">
-      <h2>Revisión técnica</h2>
-
-      <label>Parámetros verificados</label>
-      <textarea id="parametros" placeholder="Presión, temperatura, tensión, consumo, códigos de error..."></textarea>
-
-      <label>Trabajo realizado</label>
-      <textarea id="trabajo" placeholder="Limpieza, control, reparación, pruebas, carga de gas, etc."></textarea>
-
-      <label>Observaciones</label>
-      <textarea id="observaciones" placeholder="Detalle final para el cliente"></textarea>
+    <section id="vistaClientes" class="view">
+      <section class="card">
+        <h2>Base de clientes</h2>
+        <input id="buscarClientes" type="text" placeholder="Buscar cliente..." oninput="renderClientes()" />
+        <div class="actions"><button class="secondary" onclick="renderClientes()">🔄 Actualizar</button><button class="danger" onclick="borrarClientes()">🗑️ Borrar clientes</button></div>
+      </section>
+      <section class="card"><div id="clientesLista" class="table-wrap"></div></section>
     </section>
 
-    <section class="card">
-      <h2>Presupuesto tipo factura</h2>
-
-      <div class="grid grid-4">
-        <div>
-          <label>Descripción 1</label>
-          <input id="desc1" type="text" placeholder="Servicio / repuesto / instalación" />
+    <section id="vistaConfig" class="view">
+      <section class="card">
+        <h2>Datos comerciales MHEL</h2>
+        <div class="grid grid-2">
+          <div><label>Empresa</label><input id="cfgEmpresa" type="text" /></div>
+          <div><label>Teléfono</label><input id="cfgTelefono" type="text" /></div>
+          <div><label>Dirección</label><input id="cfgDireccion" type="text" /></div>
+          <div><label>Email</label><input id="cfgEmail" type="text" /></div>
+          <div><label>Web</label><input id="cfgWeb" type="text" /></div>
+          <div><label>Instagram</label><input id="cfgInstagram" type="text" /></div>
         </div>
-        <div>
-          <label>Cantidad</label>
-          <input id="cant1" type="number" value="1" min="0" />
-        </div>
-        <div>
-          <label>Precio unitario</label>
-          <input id="precio1" type="number" value="0" min="0" />
-        </div>
-        <div>
-          <label>Total</label>
-          <input id="total1" type="text" readonly />
-        </div>
-      </div>
-
-      <div class="grid grid-4">
-        <div>
-          <label>Descripción 2</label>
-          <input id="desc2" type="text" placeholder="Servicio / repuesto / instalación" />
-        </div>
-        <div>
-          <label>Cantidad</label>
-          <input id="cant2" type="number" value="0" min="0" />
-        </div>
-        <div>
-          <label>Precio unitario</label>
-          <input id="precio2" type="number" value="0" min="0" />
-        </div>
-        <div>
-          <label>Total</label>
-          <input id="total2" type="text" readonly />
-        </div>
-      </div>
-
-      <div class="grid grid-4">
-        <div>
-          <label>Descripción 3</label>
-          <input id="desc3" type="text" placeholder="Servicio / repuesto / instalación" />
-        </div>
-        <div>
-          <label>Cantidad</label>
-          <input id="cant3" type="number" value="0" min="0" />
-        </div>
-        <div>
-          <label>Precio unitario</label>
-          <input id="precio3" type="number" value="0" min="0" />
-        </div>
-        <div>
-          <label>Total</label>
-          <input id="total3" type="text" readonly />
-        </div>
-      </div>
-
-      <div class="grid grid-3">
-        <div>
-          <label>Validez del presupuesto</label>
-          <input id="validez" type="text" placeholder="7 días" />
-        </div>
-        <div>
-          <label>Forma de pago</label>
-          <input id="pago" type="text" placeholder="Contado / Transferencia / Efectivo" />
-        </div>
-        <div>
-          <label>Total general</label>
-          <input id="total_general" type="text" readonly />
-        </div>
-      </div>
-
-      <button class="success" onclick="guardar()">Guardar informe</button>
-      <button class="pdfbtn" onclick="generarPDF()">📄 Generar PDF</button>
-
-      <div class="mini">Se guarda en el navegador del celular para que puedas volver a verlo.</div>
-
-      <div class="actions">
-        <button class="primary" onclick="enviarWhatsApp()">📲 Enviar por WhatsApp</button>
-        <button class="secondary" onclick="limpiarFormulario()">Limpiar</button>
-      </div>
-    </section>
-
-    <section class="card">
-      <h2>Último informe guardado</h2>
-      <div id="ultimoGuardado" class="saved-box">Todavía no hay informe guardado.</div>
+        <button class="success full" onclick="guardarConfig()">💾 Guardar datos comerciales</button>
+        <div class="mini">Estos datos salen en el PDF. Reemplazá los que estén incompletos por los reales de MHEL.</div>
+      </section>
     </section>
   </main>
 
-  <footer>
-    MHEL Servicio Técnico
-  </footer>
+  <nav class="tabs">
+    <button class="tab-btn active" onclick="cambiarVista('vistaInforme',this)">🧾<br>Informe</button>
+    <button class="tab-btn" onclick="cambiarVista('vistaHistorial',this)">📚<br>Historial</button>
+    <button class="tab-btn" onclick="cambiarVista('vistaClientes',this)">👥<br>Clientes</button>
+    <button class="tab-btn" onclick="cambiarVista('vistaConfig',this)">⚙️<br>Datos</button>
+  </nav>
 
   <div id="pdfContent" class="hidden-pdf">
     <div class="pdf-area">
       <div class="pdf-header">
         <img src="logo.png" alt="Logo MHEL" />
-        <h3>Informe Técnico / Presupuesto</h3>
+        <h3 id="pdf_titulo">Informe Técnico / Presupuesto</h3>
         <p>Calefacción • Energía Solar • Aire Acondicionado</p>
+        <p><strong>Nº:</strong> <span id="pdf_numero"></span> | <strong>Estado:</strong> <span id="pdf_estado"></span></p>
       </div>
-
-      <div class="pdf-section">
-        <h4>Datos del cliente</h4>
-        <div class="pdf-line"><strong>Nombre:</strong> <span id="pdf_cliente"></span></div>
-        <div class="pdf-line"><strong>Teléfono:</strong> <span id="pdf_telefono"></span></div>
-        <div class="pdf-line"><strong>Dirección:</strong> <span id="pdf_direccion"></span></div>
-        <div class="pdf-line"><strong>Fecha:</strong> <span id="pdf_fecha"></span></div>
-      </div>
-
-      <div class="pdf-section">
-        <h4>Equipo</h4>
-        <div class="pdf-line"><strong>Tipo:</strong> <span id="pdf_tipo"></span></div>
-        <div class="pdf-line"><strong>Marca:</strong> <span id="pdf_marca"></span></div>
-        <div class="pdf-line"><strong>Modelo:</strong> <span id="pdf_modelo"></span></div>
-      </div>
-
-      <div class="pdf-section">
-        <h4>Revisión técnica</h4>
-        <div class="pdf-line"><strong>Parámetros verificados:</strong> <span id="pdf_parametros"></span></div>
-        <div class="pdf-line"><strong>Trabajo realizado:</strong> <span id="pdf_trabajo"></span></div>
-        <div class="pdf-line"><strong>Observaciones:</strong> <span id="pdf_observaciones"></span></div>
-      </div>
-
-      <div class="pdf-section">
-        <h4>Presupuesto</h4>
-        <table class="factura-tabla">
-          <thead>
-            <tr>
-              <th>Descripción</th>
-              <th>Cantidad</th>
-              <th>Precio unit.</th>
-              <th>Total</th>
-            </tr>
-          </thead>
-          <tbody id="pdf_items"></tbody>
-        </table>
-
-        <div class="pdf-line" style="margin-top:10px;"><strong>Validez:</strong> <span id="pdf_validez"></span></div>
-        <div class="pdf-line"><strong>Forma de pago:</strong> <span id="pdf_pago"></span></div>
-        <div class="factura-total">TOTAL GENERAL: <span id="pdf_total_general"></span></div>
-      </div>
-
-      <div class="firma">
-        <div class="firma-linea">Firma del técnico</div>
-        <div class="firma-linea">Firma del cliente</div>
-      </div>
+      <div class="pdf-section"><h4>Datos del cliente</h4><div class="pdf-line"><strong>Nombre:</strong> <span id="pdf_cliente"></span></div><div class="pdf-line"><strong>Teléfono:</strong> <span id="pdf_telefono"></span></div><div class="pdf-line"><strong>Dirección:</strong> <span id="pdf_direccion"></span></div><div class="pdf-line"><strong>Email/ref.:</strong> <span id="pdf_email"></span></div><div class="pdf-line"><strong>Fecha:</strong> <span id="pdf_fecha"></span></div></div>
+      <div class="pdf-section"><h4>Equipo</h4><div class="pdf-line"><strong>Tipo:</strong> <span id="pdf_tipo"></span></div><div class="pdf-line"><strong>Marca:</strong> <span id="pdf_marca"></span></div><div class="pdf-line"><strong>Modelo:</strong> <span id="pdf_modelo"></span></div></div>
+      <div class="pdf-section"><h4>Revisión técnica</h4><div class="pdf-line"><strong>Parámetros:</strong> <span id="pdf_parametros"></span></div><div class="pdf-line"><strong>Trabajo realizado:</strong> <span id="pdf_trabajo"></span></div><div class="pdf-line"><strong>Observaciones:</strong> <span id="pdf_observaciones"></span></div></div>
+      <div class="pdf-section"><h4>Presupuesto</h4><table class="factura-tabla"><thead><tr><th>Descripción</th><th>Cant.</th><th>Precio unit.</th><th>Total</th></tr></thead><tbody id="pdf_items"></tbody></table><div class="pdf-line" style="margin-top:10px"><strong>Validez:</strong> <span id="pdf_validez"></span></div><div class="pdf-line"><strong>Forma de pago:</strong> <span id="pdf_pago"></span></div><div class="factura-total">TOTAL GENERAL: <span id="pdf_total_general"></span></div></div>
+      <div class="firma"><div class="firma-linea">Firma del técnico</div><div class="firma-linea">Firma del cliente</div></div>
+      <div class="datos-mhel" id="pdf_datos_mhel"></div>
     </div>
   </div>
-<div style="margin-top:20px; text-align:center; font-size:12px; color:#4b5563;">
-  <div><strong>MHEL Calefacción y Energía Solar</strong></div>
-  <div>Dirección: Av. XXX 1234 - Mar del Plata</div>
-  <div>Tel: 223-XXXXXXX</div>
-  <div>Email: info@mhel.com.ar</div>
-  <div>Web: www.mhel.com.ar</div>
-  <div>Instagram: @mhelenergia</div>
-</div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <script>
-    const ids = [
-      "cliente","telefono","direccion","fecha","tipo","marca","modelo",
-      "parametros","trabajo","observaciones",
-      "desc1","cant1","precio1","total1",
-      "desc2","cant2","precio2","total2",
-      "desc3","cant3","precio3","total3",
-      "validez","pago","total_general"
-    ];
+    const STORAGE_DOCS="mhel_docs_v704";
+    const STORAGE_CLIENTES="mhel_clientes_v704";
+    const STORAGE_SEQ="mhel_seq_v704";
+    const STORAGE_CONFIG="mhel_config_v704";
+    const CONFIG_DEFAULT={empresa:"MHEL Calefacción y Energía Solar",telefono:"223-XXXXXXX",direccion:"Mar del Plata, Buenos Aires",email:"info@mhel.com.ar",web:"www.mhel.com.ar",instagram:"@mhelenergia"};
+    let itemCount=0;
 
-    function formatoMoneda(valor) {
-      return "$ " + Number(valor || 0).toLocaleString("es-AR");
-    }
+    function hoy(){return new Date().toISOString().split("T")[0]}
+    function getJSON(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}}
+    function setJSON(k,v){localStorage.setItem(k,JSON.stringify(v))}
+    function formatoMoneda(valor){const m=document.getElementById("moneda")?.value||"$"; const n=Number(valor||0).toLocaleString("es-AR"); return m==="USD"?"USD "+n:"$ "+n}
+    function obtenerNumero(id){return parseFloat(document.getElementById(id)?.value||0)}
+    function siguienteNumeroVista(){let n=Number(localStorage.getItem(STORAGE_SEQ)||1); return "P-"+new Date().getFullYear()+"-"+String(n).padStart(4,"0")}
+    function fijarNumero(n){document.getElementById("numeroMostrado").textContent=n}
 
-    function obtenerNumero(id) {
-      return parseFloat(document.getElementById(id)?.value || 0);
-    }
+    const campos=["docTipo","estado","cliente","telefono","direccion","email","fecha","tipo","marca","modelo","parametros","trabajo","observaciones","moneda","validez","pago"];
+    function agregarItem(item={}){itemCount++; const i=itemCount; const wrap=document.createElement("div"); wrap.className="grid grid-4"; wrap.id="itemWrap"+i; wrap.innerHTML=`<div><label>Descripción ${i}</label><input id="desc${i}" type="text" placeholder="Servicio / repuesto / instalación" value="${item.desc||""}"></div><div><label>Cantidad</label><input id="cant${i}" type="number" min="0" value="${item.cant??(i===1?1:0)}" oninput="actualizarTotales()"></div><div><label>Precio unitario</label><input id="precio${i}" type="number" min="0" value="${item.precio??0}" oninput="actualizarTotales()"></div><div><label>Total</label><input id="total${i}" type="text" readonly></div>`; document.getElementById("itemsContainer").appendChild(wrap); actualizarTotales()}
+    function actualizarTotales(){let total=0; for(let i=1;i<=itemCount;i++){const t=obtenerNumero("cant"+i)*obtenerNumero("precio"+i); const el=document.getElementById("total"+i); if(el) el.value=formatoMoneda(t); total+=t} document.getElementById("total_general").textContent=formatoMoneda(total)}
+    function obtenerItems(){const items=[]; for(let i=1;i<=itemCount;i++){const desc=document.getElementById("desc"+i)?.value||""; const cant=document.getElementById("cant"+i)?.value||0; const precio=document.getElementById("precio"+i)?.value||0; const total=document.getElementById("total"+i)?.value||""; if(desc.trim()||Number(cant)>0||Number(precio)>0) items.push({desc,cant,precio,total})} return items}
+    function cargarItems(items){document.getElementById("itemsContainer").innerHTML=""; itemCount=0; (items&&items.length?items:[{cant:1,precio:0},{cant:0,precio:0},{cant:0,precio:0}]).forEach(agregarItem); actualizarTotales()}
+    function obtenerDatos(){actualizarTotales(); const d={numero:document.getElementById("numeroMostrado").textContent,items:obtenerItems(),total_general:document.getElementById("total_general").textContent,creado:new Date().toISOString()}; campos.forEach(id=>d[id]=document.getElementById(id)?.value||""); return d}
+    function armarTexto(d){return `MHEL - ${d.docTipo}\nNº: ${d.numero}\nEstado: ${d.estado}\n\nCliente: ${d.cliente}\nTeléfono: ${d.telefono}\nDirección: ${d.direccion}\nFecha: ${d.fecha}\n\nEquipo: ${d.tipo}\nMarca: ${d.marca}\nModelo: ${d.modelo}\n\nParámetros verificados:\n${d.parametros}\n\nTrabajo realizado:\n${d.trabajo}\n\nObservaciones:\n${d.observaciones}\n\nPRESUPUESTO:\n${d.items.map((it,idx)=>`${idx+1}) ${it.desc} - Cant: ${it.cant} - Unit: ${formatoMoneda(it.precio)} - Total: ${it.total}`).join("\n")}\n\nValidez: ${d.validez}\nForma de pago: ${d.pago}\nTotal general: ${d.total_general}`}
+    function mostrarUltimo(d){document.getElementById("ultimoGuardado").textContent=d?armarTexto(d):(localStorage.getItem("mhel_ultimo_texto")||"Todavía no hay documento guardado.")}
+    function guardarDocumento(){const d=obtenerDatos(); const docs=getJSON(STORAGE_DOCS,[]); const idx=docs.findIndex(x=>x.numero===d.numero); if(idx>=0) docs[idx]=d; else docs.unshift(d); setJSON(STORAGE_DOCS,docs); localStorage.setItem("mhel_ultimo_texto",armarTexto(d)); guardarClienteDesdeFormulario(false); const seq=Number(localStorage.getItem(STORAGE_SEQ)||1); const nroActual=Number((d.numero||"").split("-").pop()||0); if(nroActual>=seq) localStorage.setItem(STORAGE_SEQ,nroActual+1); mostrarUltimo(d); renderHistorial(); alert("Documento guardado correctamente")}
+    function guardarClienteDesdeFormulario(avisar=true){const nombre=document.getElementById("cliente").value.trim(); if(!nombre){if(avisar) alert("Primero cargá el nombre del cliente."); return} const c={nombre,telefono:document.getElementById("telefono").value,direccion:document.getElementById("direccion").value,email:document.getElementById("email").value,actualizado:new Date().toISOString()}; const arr=getJSON(STORAGE_CLIENTES,[]); const idx=arr.findIndex(x=>x.nombre.toLowerCase()===nombre.toLowerCase()); if(idx>=0) arr[idx]=c; else arr.unshift(c); setJSON(STORAGE_CLIENTES,arr); actualizarDatalistClientes(); renderClientes(); if(avisar) alert("Cliente guardado en la base MHEL")}
+    function buscarClienteRapido(){const nombre=document.getElementById("cliente").value.trim().toLowerCase(); if(!nombre)return; const c=getJSON(STORAGE_CLIENTES,[]).find(x=>x.nombre.toLowerCase()===nombre); if(c){document.getElementById("telefono").value=c.telefono||"";document.getElementById("direccion").value=c.direccion||"";document.getElementById("email").value=c.email||""}}
+    function actualizarDatalistClientes(){const dl=document.getElementById("clientesList"); dl.innerHTML=""; getJSON(STORAGE_CLIENTES,[]).forEach(c=>{const o=document.createElement("option"); o.value=c.nombre; dl.appendChild(o)})}
+    function cargarDocumento(n){const d=getJSON(STORAGE_DOCS,[]).find(x=>x.numero===n); if(!d)return; campos.forEach(id=>{const el=document.getElementById(id); if(el) el.value=d[id]||""}); fijarNumero(d.numero); cargarItems(d.items); mostrarUltimo(d); cambiarVista('vistaInforme',document.querySelector('.tab-btn')); window.scrollTo(0,0)}
+    function eliminarDocumento(n){if(!confirm("¿Borrar este documento del historial?"))return; setJSON(STORAGE_DOCS,getJSON(STORAGE_DOCS,[]).filter(x=>x.numero!==n)); renderHistorial()}
+    function renderHistorial(){const q=(document.getElementById("buscarHistorial")?.value||"").toLowerCase(); const docs=getJSON(STORAGE_DOCS,[]).filter(d=>JSON.stringify(d).toLowerCase().includes(q)); const el=document.getElementById("historialLista"); if(!docs.length){el.innerHTML="<div class='mini'>No hay documentos guardados.</div>";return} el.innerHTML=`<table><thead><tr><th>Nº</th><th>Fecha</th><th>Cliente</th><th>Total</th><th>Estado</th><th>Acciones</th></tr></thead><tbody>${docs.map(d=>`<tr><td>${d.numero}</td><td>${d.fecha||""}</td><td>${d.cliente||""}</td><td>${d.total_general||""}</td><td>${d.estado||""}</td><td><button class="secondary" onclick="cargarDocumento('${d.numero}')">Abrir</button><button class="danger" onclick="eliminarDocumento('${d.numero}')">Borrar</button></td></tr>`).join("")}</tbody></table>`}
+    function renderClientes(){const q=(document.getElementById("buscarClientes")?.value||"").toLowerCase(); const cs=getJSON(STORAGE_CLIENTES,[]).filter(c=>JSON.stringify(c).toLowerCase().includes(q)); const el=document.getElementById("clientesLista"); if(!cs.length){el.innerHTML="<div class='mini'>No hay clientes guardados.</div>";return} el.innerHTML=`<table><thead><tr><th>Cliente</th><th>Teléfono</th><th>Dirección</th><th>Acción</th></tr></thead><tbody>${cs.map((c,i)=>`<tr><td>${c.nombre}</td><td>${c.telefono||""}</td><td>${c.direccion||""}</td><td><button class="secondary" onclick="usarCliente(${i})">Usar</button></td></tr>`).join("")}</tbody></table>`}
+    function usarCliente(i){const c=getJSON(STORAGE_CLIENTES,[])[i]; if(!c)return; document.getElementById("cliente").value=c.nombre; document.getElementById("telefono").value=c.telefono||""; document.getElementById("direccion").value=c.direccion||""; document.getElementById("email").value=c.email||""; cambiarVista('vistaInforme',document.querySelector('.tab-btn'));}
+    function cargarDatosPDF(d){["cliente","telefono","direccion","email","fecha","tipo","marca","modelo","parametros","trabajo","observaciones","validez","pago"].forEach(k=>document.getElementById("pdf_"+k).textContent=d[k]||""); document.getElementById("pdf_titulo").textContent=d.docTipo; document.getElementById("pdf_numero").textContent=d.numero; document.getElementById("pdf_estado").textContent=d.estado; document.getElementById("pdf_total_general").textContent=d.total_general; const tbody=document.getElementById("pdf_items"); tbody.innerHTML=""; d.items.forEach(it=>{const tr=document.createElement("tr");tr.innerHTML=`<td>${it.desc||""}</td><td>${it.cant||""}</td><td>${formatoMoneda(it.precio)}</td><td>${it.total||""}</td>`;tbody.appendChild(tr)}); const cfg=getJSON(STORAGE_CONFIG,CONFIG_DEFAULT); document.getElementById("pdf_datos_mhel").innerHTML=`<strong>${cfg.empresa}</strong><br>Dirección: ${cfg.direccion}<br>Tel: ${cfg.telefono}<br>Email: ${cfg.email}<br>Web: ${cfg.web}<br>Instagram: ${cfg.instagram}`}
+    async function generarPDF(){try{const d=obtenerDatos(); cargarDatosPDF(d); const {jsPDF}=window.jspdf; const canvas=await html2canvas(document.getElementById("pdfContent"),{scale:2,useCORS:true,backgroundColor:"#ffffff"}); const imgData=canvas.toDataURL("image/png"); const pdf=new jsPDF("p","mm","a4"); const imgWidth=200; const imgHeight=(canvas.height*imgWidth)/canvas.width; pdf.addImage(imgData,"PNG",5,5,imgWidth,imgHeight); pdf.save(`${d.numero}_${(d.cliente||"Cliente").replace(/\s+/g,"_")}.pdf`)}catch(e){console.error(e);alert("No se pudo generar el PDF. Revisá que logo.png esté junto al index.html y que haya internet para cargar las librerías.")}}
+    function enviarWhatsApp(){const d=obtenerDatos(); const tel=(d.telefono||"").replace(/\D/g,""); const url=`https://wa.me/${tel}?text=${encodeURIComponent(armarTexto(d))}`; window.open(url,"_blank")}
+    function limpiarFormularioSinNumero(){campos.forEach(id=>{const el=document.getElementById(id); if(!el)return; if(id==="fecha")el.value=hoy(); else if(id==="docTipo")el.selectedIndex=0; else if(id==="estado")el.selectedIndex=0; else if(id==="tipo")el.selectedIndex=0; else if(id==="moneda")el.selectedIndex=0; else el.value=""}); cargarItems(); mostrarUltimo(null)}
+    function nuevoDocumento(){limpiarFormularioSinNumero(); fijarNumero(siguienteNumeroVista())}
+    function cambiarVista(id,btn){document.querySelectorAll(".view").forEach(v=>v.classList.remove("active")); document.getElementById(id).classList.add("active"); document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active")); if(btn)btn.classList.add("active"); renderHistorial(); renderClientes(); cargarConfigEnPantalla()}
+    function exportarRespaldo(){const data={documentos:getJSON(STORAGE_DOCS,[]),clientes:getJSON(STORAGE_CLIENTES,[]),config:getJSON(STORAGE_CONFIG,CONFIG_DEFAULT),fecha:new Date().toISOString()}; const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"}); const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="respaldo_MHEL_PRO.json"; a.click()}
+    function borrarHistorial(){if(confirm("¿Borrar todo el historial de documentos de este celular?")){localStorage.removeItem(STORAGE_DOCS);renderHistorial()}}
+    function borrarClientes(){if(confirm("¿Borrar toda la base de clientes de este celular?")){localStorage.removeItem(STORAGE_CLIENTES);actualizarDatalistClientes();renderClientes()}}
+    function cargarConfigEnPantalla(){const c=getJSON(STORAGE_CONFIG,CONFIG_DEFAULT); document.getElementById("cfgEmpresa").value=c.empresa; document.getElementById("cfgTelefono").value=c.telefono; document.getElementById("cfgDireccion").value=c.direccion; document.getElementById("cfgEmail").value=c.email; document.getElementById("cfgWeb").value=c.web; document.getElementById("cfgInstagram").value=c.instagram}
+    function guardarConfig(){const c={empresa:cfgEmpresa.value,telefono:cfgTelefono.value,direccion:cfgDireccion.value,email:cfgEmail.value,web:cfgWeb.value,instagram:cfgInstagram.value}; setJSON(STORAGE_CONFIG,c); alert("Datos comerciales guardados")}
 
-    function actualizarTotales() {
-      const total1 = obtenerNumero("cant1") * obtenerNumero("precio1");
-      const total2 = obtenerNumero("cant2") * obtenerNumero("precio2");
-      const total3 = obtenerNumero("cant3") * obtenerNumero("precio3");
-      const totalGeneral = total1 + total2 + total3;
-
-      document.getElementById("total1").value = formatoMoneda(total1);
-      document.getElementById("total2").value = formatoMoneda(total2);
-      document.getElementById("total3").value = formatoMoneda(total3);
-      document.getElementById("total_general").value = formatoMoneda(totalGeneral);
-    }
-
-    function obtenerDatos() {
-      const datos = {};
-      ids.forEach(id => {
-        const el = document.getElementById(id);
-        datos[id] = el ? el.value : "";
-      });
-      return datos;
-    }
-
-    function armarTexto(datos) {
-      return `MHEL - INFORME TÉCNICO / PRESUPUESTO
-
-Cliente: ${datos.cliente}
-Teléfono: ${datos.telefono}
-Dirección: ${datos.direccion}
-Fecha: ${datos.fecha}
-
-Equipo: ${datos.tipo}
-Marca: ${datos.marca}
-Modelo: ${datos.modelo}
-
-Parámetros verificados:
-${datos.parametros}
-
-Trabajo realizado:
-${datos.trabajo}
-
-Observaciones:
-${datos.observaciones}
-
-PRESUPUESTO:
-1) ${datos.desc1} - Cant: ${datos.cant1} - Unit: ${datos.precio1} - Total: ${datos.total1}
-2) ${datos.desc2} - Cant: ${datos.cant2} - Unit: ${datos.precio2} - Total: ${datos.total2}
-3) ${datos.desc3} - Cant: ${datos.cant3} - Unit: ${datos.precio3} - Total: ${datos.total3}
-
-Validez: ${datos.validez}
-Forma de pago: ${datos.pago}
-Total general: ${datos.total_general}`;
-    }
-
-    function mostrarUltimo() {
-      const guardado = localStorage.getItem("mhel_informe");
-      const caja = document.getElementById("ultimoGuardado");
-      if (caja) {
-        caja.textContent = guardado || "Todavía no hay informe guardado.";
-      }
-    }
-
-    function guardar() {
-      actualizarTotales();
-      const datos = obtenerDatos();
-      const texto = armarTexto(datos);
-      localStorage.setItem("mhel_informe", texto);
-      mostrarUltimo();
-      alert("Informe guardado correctamente");
-    }
-
-    async function copiarWhatsApp() {
-      actualizarTotales();
-      const texto = armarTexto(obtenerDatos());
-      try {
-        await navigator.clipboard.writeText(texto);
-        alert("Texto copiado. Ahora lo podés pegar en WhatsApp.");
-      } catch (e) {
-        alert("No se pudo copiar automáticamente.");
-      }
-    }
-
-    function limpiarFormulario() {
-      ids.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) {
-          if (el.tagName === "SELECT") {
-            el.selectedIndex = 0;
-          } else if (id === "fecha") {
-            el.value = new Date().toISOString().split("T")[0];
-          } else if (id === "cant1") {
-            el.value = 1;
-          } else if (id.startsWith("cant") || id.startsWith("precio")) {
-            el.value = 0;
-          } else if (id.startsWith("total") || id === "total_general") {
-            el.value = "";
-          } else {
-            el.value = "";
-          }
-        }
-      });
-      actualizarTotales();
-    }
-
-    function cargarDatosPDF(datos) {
-      document.getElementById("pdf_cliente").textContent = datos.cliente;
-      document.getElementById("pdf_telefono").textContent = datos.telefono;
-      document.getElementById("pdf_direccion").textContent = datos.direccion;
-      document.getElementById("pdf_fecha").textContent = datos.fecha;
-      document.getElementById("pdf_tipo").textContent = datos.tipo;
-      document.getElementById("pdf_marca").textContent = datos.marca;
-      document.getElementById("pdf_modelo").textContent = datos.modelo;
-      document.getElementById("pdf_parametros").textContent = datos.parametros;
-      document.getElementById("pdf_trabajo").textContent = datos.trabajo;
-      document.getElementById("pdf_observaciones").textContent = datos.observaciones;
-      document.getElementById("pdf_validez").textContent = datos.validez;
-      document.getElementById("pdf_pago").textContent = datos.pago;
-      document.getElementById("pdf_total_general").textContent = datos.total_general;
-
-      const tbody = document.getElementById("pdf_items");
-      tbody.innerHTML = "";
-
-      const items = [
-        [datos.desc1, datos.cant1, datos.precio1, datos.total1],
-        [datos.desc2, datos.cant2, datos.precio2, datos.total2],
-        [datos.desc3, datos.cant3, datos.precio3, datos.total3]
-      ];
-
-      items.forEach(item => {
-        const [desc, cant, precio, total] = item;
-        if ((desc && desc.trim() !== "") || (Number(cant) > 0 && Number(precio) > 0)) {
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td>${desc || ""}</td>
-            <td>${cant || ""}</td>
-            <td>${precio ? formatoMoneda(precio) : ""}</td>
-            <td>${total || ""}</td>
-          `;
-          tbody.appendChild(tr);
-        }
-      });
-    }
-
-    async function generarPDF() {
-      try {
-        actualizarTotales();
-        const { jsPDF } = window.jspdf;
-        const datos = obtenerDatos();
-        cargarDatosPDF(datos);
-
-        const contenidoPDF = document.getElementById("pdfContent");
-
-        const canvas = await html2canvas(contenidoPDF, {
-          scale: 2,
-          useCORS: true,
-          backgroundColor: "#ffffff"
-        });
-
-        const imgData = canvas.toDataURL("image/png");
-        const pdf = new jsPDF("p", "mm", "a4");
-
-        const imgWidth = 200;
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-        pdf.addImage(imgData, "PNG", 5, 5, imgWidth, imgHeight);
-        pdf.save("Informe_MHEL.pdf");
-      } catch (error) {
-        console.error(error);
-        alert("No se pudo generar el PDF.");
-      }
-    }
-function enviarWhatsApp() {
-  const datos = obtenerDatos();
-  const texto = armarTexto(datos);
-
-  const telefono = datos.telefono.replace(/\D/g, "");
-
-  const url = `https://wa.me/${telefono}?text=${encodeURIComponent(texto)}`;
-
-  window.open(url, "_blank");
-}
-    ["cant1","precio1","cant2","precio2","cant3","precio3"].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.addEventListener("input", actualizarTotales);
-    });
-
-    const fecha = document.getElementById("fecha");
-    if (fecha) {
-      fecha.value = new Date().toISOString().split("T")[0];
-    }
-
-    actualizarTotales();
-    mostrarUltimo();
-
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js").catch(() => {});
-      });
-    }
+    document.getElementById("fecha").value=hoy(); fijarNumero(siguienteNumeroVista()); cargarItems(); actualizarDatalistClientes(); renderHistorial(); renderClientes(); cargarConfigEnPantalla(); mostrarUltimo(null);
+    if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("./sw.js").catch(()=>{})})}
   </script>
 </body>
 </html>
